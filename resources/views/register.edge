@@ -1,0 +1,71 @@
+@layout('layouts/main')
+@set('title','Registrarse')
+
+@section('section')
+<div class="section-div_form">
+  <form class="form" method="post" action="{{ route('user.create') }}">
+
+    {{ csrfField() }}
+
+    <h3 class="form-h3">Regístrate</h3>
+    <div class="form-div">
+      @!component('components/input', {
+        type: 'text',
+        name: 'name',
+        placeholder: 'Nombre',
+        value: flashMessages.get('name') || ''
+      })
+      @!component('components/span', {
+        error: 'errors.name'
+      })
+    </div>
+
+    <div class="form-div">
+      @!component('components/input', {
+        type: 'text',
+        name: 'lastname',
+        placeholder: 'Apellido',
+        value: flashMessages.get('lastname') || ''
+      })
+      @!component('components/span', {
+        error: 'errors.lastname'
+      })
+    </div>
+
+    <div class="form-div">
+      @!component('components/input', {
+        type: 'email',
+        name: 'email',
+        placeholder: 'Correo electrónico',
+        value: flashMessages.get('email') || ''
+      })
+      @!component('components/span', {
+        error: 'errors.email'
+      })
+    </div>
+
+    <div class="form-div">
+      @!component('components/input', {
+        type: 'password',
+        name: 'password',
+        placeholder: 'Contraseña',
+        value: ''
+      })
+      @!component('components/span', {
+        error: 'errors.password'
+      })
+    </div>
+    
+
+    <div class="form-div form-div_links">
+      <a href="{{ route('login.form') }}" class="link">¿Ya estás registrado?</a>
+    </div>
+
+    @!component('components/button', {
+      type: 'submit',
+      text: 'Registrar',
+      style: 'btn-primary'
+    })
+  </form>
+</div>
+@end

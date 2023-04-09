@@ -1,0 +1,53 @@
+@layout('layouts/main')
+@set('title','Iniciar Sesión')
+
+@section('section')
+<div class="section-div_form">
+  <form class="form" method="post" action="#">
+
+    {{ csrfField() }}
+
+    <h3 class="form-h3">Iniciar Sesión</h3>
+    <div class="form-div">
+      @!component('components/input', {
+        type: 'email',
+        name: 'email',
+        placeholder: 'Correo electrónico',
+        value: flashMessages.get('email') || ''
+      })
+      @!component('components/span', {
+        error: 'errors.email'
+      })
+    </div>
+  
+    <div class="form-div">
+      @!component('components/input', {
+        type: 'password',
+        name: 'password',
+        placeholder: 'Contraseña',
+        value: ''
+      })
+      @!component('components/span', {
+        error: 'errors.password'
+      })
+    </div>
+
+    <div class="form-div">
+      <label class="label" for="remember">
+        <input type="checkbox" name="remember" id="remember">
+        Recuérdame
+      </label>
+    </div>
+    
+    <div class="form-div form-div_links">
+      <a href="{{ route('register.form') }}" class="link">¿Aún no tienes una cuenta?</a>
+    </div>
+
+    @!component('components/button', {
+      type: 'submit',
+      text: 'Ingresar',
+      style: 'btn-primary'
+    })
+  </form>
+</div>
+@end
