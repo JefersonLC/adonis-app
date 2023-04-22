@@ -3,6 +3,10 @@
 
 @section('section')
 <div class="section-div_form">
+  @!component('components/alert', {
+    message: 'loginError',
+    style: 'alert-error'
+  })
   <form class="form" method="post" action="#">
 
     {{ csrfField() }}
@@ -34,7 +38,7 @@
 
     <div class="form-div">
       <label class="label" for="remember">
-        <input type="checkbox" name="remember" id="remember">
+        <input type="checkbox" name="rememberMe" id="remember">
         Recuérdame
       </label>
     </div>
