@@ -1,23 +1,25 @@
-import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { schema, rules, CustomMessages } from '@ioc:Adonis/Core/Validator'
 import User from 'App/Models/User'
 
 export default class UsersController {
-  public async create(ctx: HttpContextContract) {
+  public async create({ request, response }: HttpContextContract) {
     // Validation
     const createUserSchema = schema.create({
-      name: schema.string({ trim: true }, [
+      name: schema.string([
+        rules.trim(),
         rules.minLength(2),
         rules.maxLength(50),
         rules.required(),
       ]),
-      lastname: schema.string({ trim: true }, [
+      lastname: schema.string([
+        rules.trim(),
         rules.minLength(2),
         rules.maxLength(50),
         rules.required(),
       ]),
-      email: schema.string({ trim: true }, [rules.required(), rules.email()]),
-      password: schema.string({}, [rules.minLength(8), rules.required()]),
+      email: schema.string([rules.trim(), rules.required(), rules.email()]),
+      password: schema.string([rules.minLength(8), rules.required()]),
     })
 
     const messages: CustomMessages = {
@@ -27,7 +29,7 @@ export default class UsersController {
       maxLength: 'Máximo {{options.maxLength}} caracteres',
     }
 
-    const payload = await ctx.request.validate({ schema: createUserSchema, messages })
+    const payload = await request.validate({ schema: createUserSchema, messages })
 
     // Create new user
     const user = new User()
@@ -40,8 +42,6 @@ export default class UsersController {
       })
       .save()
 
-    ctx.response.redirect('/login')
+    response.redirect('/login')
   }
-
-  public async login(ctx: HttpContextContract) {}
 }
