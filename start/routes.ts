@@ -1,20 +1,20 @@
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.get('/', async ({ view }) => {
-  return view.render('home')
-})
+// Home
+Route.on('/').render('home').as('home')
 
-Route.get('/products', async ({ view }) => {
-  return view.render('products')
-})
+// Products
+Route.on('/products').render('products').as('products')
 
-// Login
-Route.get('/login', async ({ view }) => view.render('login')).as('login.form')
+// Auth
+Route.on('/login').render('login').as('login.form')
 
-Route.post('/login', 'UserController.login').as('user.login')
+Route.post('/login', 'AuthController.login').as('user.login')
+
+Route.get('/logout', 'AuthController.logout').as('user.logout').middleware('auth')
 
 // Register
-Route.get('/register', ({ view }) => view.render('register')).as('register.form')
+Route.on('/register').render('register').as('register.form')
 
 Route.post('/register', 'UsersController.create').as('user.create')
 
