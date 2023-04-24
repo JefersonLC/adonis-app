@@ -20,7 +20,7 @@ export const http: ServerConfig = {
     maxAge: '1h',
     httpOnly: true,
     secure: false,
-    sameSite: false,
+    sameSite: 'strict',
   },
 }
 

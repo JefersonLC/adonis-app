@@ -11,7 +11,7 @@ export default sessionConfig({
   cookie: {
     path: '/',
     httpOnly: true,
-    sameSite: false,
+    sameSite: 'strict',
   },
   file: {
     location: Application.tmpPath('sessions'),
