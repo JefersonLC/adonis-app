@@ -7,4 +7,5 @@ Server.middleware.register([
 
 Server.middleware.registerNamed({
   auth: () => import('App/Middleware/Auth'),
+  checkAuth: () => import('App/Middleware/SilentAuth'),
 })
