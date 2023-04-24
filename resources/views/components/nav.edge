@@ -1,0 +1,15 @@
+<nav class="nav-links">
+  <ul class="link-list">
+    <li class="link-list-item"><a class="nav-link" href="/">Inicio</a></li>
+    <li class="link-list-item"><a class="nav-link" href="/products">Productos</a></li>
+  </ul>
+  <ul class="link-list">
+
+    @if(!auth.isLoggedIn)
+      <li class="link-list-item"><a class="nav-link" href="/login">Iniciar Sesiòn</a></li>
+    @else
+      <li class="link-list-item"><a class="nav-link" href="/logout">Cerrar Sesiòn</a></li>
+      <li class="link-list-item"><a class="nav-link" href="/profile">Mi perfil</a></li>
+    @end
+  </ul>
+</nav>

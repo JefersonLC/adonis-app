@@ -1,0 +1,8 @@
+@layout('layouts/main')
+@set('title','Profile')
+
+@section('section')
+@include('partials/side-navbar.edge')
+@include('partials/top-navbar.edge')
+<div>{{ auth.user.name }}</div>
+@end
