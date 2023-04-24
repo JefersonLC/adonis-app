@@ -23,15 +23,16 @@ export default class AuthController {
     try {
       await auth.attempt(email, password, !!rememberMe)
       session.regenerate()
+      return response.redirect().toRoute('user.profile')
     } catch (error) {
       session.flash({ loginError: 'Correo o contraseña incorrecta/o' })
-      return response.redirect().back()
+      return response.redirect().toRoute('user.login')
     }
   }
 
   public async logout({ auth, response, session }: HttpContextContract) {
     await auth.use('web').logout()
     session.regenerate()
-    return response.redirect('/login')
+    return response.redirect().toRoute('home')
   }
 }
