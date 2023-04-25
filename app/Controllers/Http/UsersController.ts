@@ -1,47 +1,47 @@
+import { Encryption } from '@adonisjs/core/build/standalone'
+import Mail from '@ioc:Adonis/Addons/Mail'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { schema, rules, CustomMessages } from '@ioc:Adonis/Core/Validator'
+import Env from '@ioc:Adonis/Core/Env'
+import Token from 'App/Models/Token'
 import User from 'App/Models/User'
+import { createUserMessages, createUserSchema } from 'App/Validation/CreateUser'
 
 export default class UsersController {
-  public async create({ request, response }: HttpContextContract) {
-    // Validation
-    const createUserSchema = schema.create({
-      name: schema.string([
-        rules.trim(),
-        rules.minLength(2),
-        rules.maxLength(50),
-        rules.required(),
-      ]),
-      lastname: schema.string([
-        rules.trim(),
-        rules.minLength(2),
-        rules.maxLength(50),
-        rules.required(),
-      ]),
-      email: schema.string([rules.trim(), rules.required(), rules.email()]),
-      password: schema.string([rules.minLength(8), rules.required()]),
+  public async create({ request, response, session }: HttpContextContract) {
+    const payload = await request.validate({
+      schema: createUserSchema,
+      messages: createUserMessages,
     })
+    try {
+      const userModel = new User()
+      const user = await userModel
+        .fill({
+          name: payload.name,
+          lastname: payload.lastname,
+          email: payload.email,
+          password: payload.password,
+        })
+        .save()
 
-    const messages: CustomMessages = {
-      required: 'Campo requerido',
-      email: 'Formato inválido',
-      minLength: 'Mínimo {{options.minLength}} caracteres',
-      maxLength: 'Máximo {{options.maxLength}} caracteres',
-    }
-
-    const payload = await request.validate({ schema: createUserSchema, messages })
-
-    // Create new user
-    const user = new User()
-    await user
-      .fill({
-        name: payload.name,
-        lastname: payload.lastname,
-        email: payload.email,
-        password: payload.password,
+      const { token } = await Token.create({
+        user_id: user.id,
+        token: new Encryption({ secret: Env.get('APP_KEY') }).encrypt(user.id + user.email),
+        type: 'email_verification',
       })
-      .save()
 
-    response.redirect('/login')
+      await Mail.send((message) => {
+        message
+          .from(Env.get('SMTP_USERNAME'))
+          .to(user.email)
+          .subject('Email verification')
+          .htmlView('emails/verification', { token })
+      })
+      session.flash('registerSuccess', 'Registro exitoso. Se le envió un correo de verificación')
+      return response.redirect().toRoute('login.form')
+    } catch (error) {
+      session.regenerate()
+      session.flash('registerError', 'El correo ya está registrado')
+      return response.redirect().back()
+    }
   }
 }
