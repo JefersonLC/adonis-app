@@ -3,6 +3,10 @@
 
 @section('section')
 <div class="section-div_form">
+  @!component('components/alert', {
+    message: 'registerError',
+    style: 'alert-error'
+  })
   <form class="form" method="post" action="{{ route('user.create') }}">
 
     {{ csrfField() }}
