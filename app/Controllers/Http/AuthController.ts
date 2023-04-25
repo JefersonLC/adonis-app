@@ -1,23 +1,12 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { schema, rules, CustomMessages } from '@ioc:Adonis/Core/Validator'
+import Token from 'App/Models/Token'
+import { loginMessages, loginSchema } from 'App/Validation/LoginUser'
 
 export default class AuthController {
   public async login({ request, auth, response, session }: HttpContextContract) {
-    const loginSchema = schema.create({
-      email: schema.string([rules.email(), rules.trim()]),
-      password: schema.string([rules.minLength(8)]),
-      rememberMe: schema.boolean.optional(),
-    })
-
-    const messages: CustomMessages = {
-      required: 'Campo requerido',
-      email: 'Formato inválido',
-      minLength: 'Mínimo {{options.minLength}} caracteres',
-    }
-
     const { email, password, rememberMe } = await request.validate({
       schema: loginSchema,
-      messages,
+      messages: loginMessages,
     })
 
     try {
@@ -34,5 +23,22 @@ export default class AuthController {
     await auth.use('web').logout()
     session.regenerate()
     return response.redirect().toRoute('home')
+  }
+
+  public async verifyEmail({ request, response, view }: HttpContextContract) {
+    const token = request.input('token')
+
+    if (!token) return response.redirect('/')
+
+    const existingToken = await Token.query().preload('user').where('token', token).first()
+
+    if (!existingToken) return response.redirect('/')
+
+    existingToken.user.isVerified = true
+    existingToken.user.save()
+
+    await existingToken.delete()
+
+    return view.render('verified')
   }
 }
