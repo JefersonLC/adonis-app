@@ -23,11 +23,16 @@ export default Env.rules({
   SESSION_DRIVER: Env.schema.string(),
   DRIVE_DISK: Env.schema.enum(['local'] as const),
   NODE_ENV: Env.schema.enum(['development', 'production', 'test'] as const),
-  //Database
+  // Database
   DB_CONNECTION: Env.schema.string(),
   MYSQL_HOST: Env.schema.string(),
   MYSQL_PORT: Env.schema.number(),
   MYSQL_USER: Env.schema.string(),
   MYSQL_PASSWORD: Env.schema.string(),
   MYSQL_DB_NAME: Env.schema.string(),
+  // Mailer
+  SMTP_HOST: Env.schema.string(),
+  SMTP_PORT: Env.schema.number(),
+  SMTP_USERNAME: Env.schema.string(),
+  SMTP_PASSWORD: Env.schema.string(),
 })
