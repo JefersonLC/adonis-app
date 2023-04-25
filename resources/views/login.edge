@@ -7,6 +7,10 @@
     message: 'loginError',
     style: 'alert-error'
   })
+  @!component('components/alert', {
+    message: 'registerSuccess',
+    style: 'alert-success'
+  })
   <form class="form" method="post" action="#">
 
     {{ csrfField() }}
