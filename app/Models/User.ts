@@ -1,5 +1,6 @@
-import { BaseModel, column, beforeSave, afterFind } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, beforeSave, afterFind, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
 import Hash from '@ioc:Adonis/Core/Hash'
+import Token from './Token'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -25,6 +26,12 @@ export default class User extends BaseModel {
 
   @column()
   public rememberMeToken: string | null
+
+  @hasMany(() => Token, {
+    localKey: 'id',
+    foreignKey: 'user_id',
+  })
+  public tokens: HasMany<typeof Token>
 
   @beforeSave()
   public static async hashPassword(user: User) {
