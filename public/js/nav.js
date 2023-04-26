@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-
 // Topbar script
 const topNavbar = document.querySelector('.top-navbar')
 let lastScroll = window.scrollY

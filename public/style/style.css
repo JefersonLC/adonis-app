@@ -97,7 +97,7 @@ body.overlay-show {
 }
 
 .sidebar-toggle.sidebar-on {
-  position: absolute;
+  position: fixed;
   top: 2rem;
   left: 0;
   border-top-right-radius: 50%;
@@ -106,6 +106,7 @@ body.overlay-show {
   height: 3.15rem;
   border: none;
   cursor: pointer;
+  background-color: #ffffff96;
 }
 
 /*Top navbar*/
@@ -118,6 +119,7 @@ body.overlay-show {
   background-color: #fff;
   padding: 0 1.5rem;
   transition: transform 0.3s ease, opacity 0.3s ease;
+  box-shadow: 0 0 10px 2px #35353544;
 }
 
 .top-navbar.hide {
@@ -230,7 +232,120 @@ body.overlay-show {
   box-shadow: 0px 0px 10px 1px #417ae4be;
 }
 
+/*profile*/
+.container {
+  min-height: 100vh;
+  background-color: #fff;
+}
+
+.profile-background {
+  height: 200px;
+  background-color: var(--color-primary);
+}
+
+.profile-header {
+  position: relative;
+  padding: 90px 0 20px;
+}
+
+.profile-avatar {
+  position: absolute;
+  top: -75px;
+  left: calc(50% - 75px);
+}
+
+.avatar {
+  display:block;
+  width: 150px;
+  height: 150px;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: #fff;
+}
+
+.profile-header-data {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.badge-role {
+  top: 1rem;
+  right: 1rem;
+  border-radius: 0.2rem;
+  background-color: rgb(48, 240, 10);
+  padding: 0.25rem;
+  font-size: 0.75rem;
+  display:block;
+  width: 45px;
+  margin:auto
+}
+
+.profile-body-data {
+  width: 95%;
+  margin: auto;
+  background-color: #eeeeee;
+  border-radius: 0.2rem;
+  padding: 1rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.45rem;
+}
+
+.control-data {
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 0.2rem;
+}
+
+.control-data-key {
+  color: #888;
+  padding: 0 0.45rem;
+}
+
+.control-data-value {
+  display: block;
+  width: 100%;
+  margin-top: 0.45rem;
+  padding: 0 0.45rem;
+  border-bottom: 1px solid var(--color-primary);
+  word-wrap: break-word;
+}
+
+.footer {
+  padding: 1rem 2rem;
+  text-align: center;
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+.footer hr {
+  margin: 1rem auto;
+  border-color: #fff;
+  max-width: 500px;
+}
+
+.social-icon i {
+  font-size: 2rem;
+  color: #fff;
+}
+
+.social-icon i:hover {
+  color: #ffffff83;
+}
+
 @media screen and (min-width: 460px) {
+  .badge-role {
+    display:inline;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+
   .form {
     max-width: 400px;
   }
@@ -245,5 +360,23 @@ body.overlay-show {
 
   .top-navbar {
     display: block;
+  }
+
+  .profile-header {
+    max-width: 650px;
+    margin: 0 auto
+  }
+
+  .profile-avatar {
+    top: -75px;
+    left: 0;
+  }
+
+  .profile-header-data {
+    text-align: start;
+  }
+  .profile-body {
+    max-width: 750px;
+    margin: 0 auto
   }
 }
