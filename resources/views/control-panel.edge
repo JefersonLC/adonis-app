@@ -1,0 +1,17 @@
+@layout('layouts/main')
+@set('title','Profile')
+
+@section('section')
+@include('partials/side-navbar.edge')
+@include('partials/top-navbar.edge')
+
+<div class="container">
+    <div class="panel-users"></div>
+    <div class="panel-categories">Categorias</div>
+    <div class="panel-products">Productos</div>
+    <button id="post-btn">POST</button>
+</div>
+
+<script src="./js/categories.js"></script>
+
+@end

@@ -4,5 +4,44 @@
 @section('section')
 @include('partials/side-navbar.edge')
 @include('partials/top-navbar.edge')
-<div>{{ auth.user.name }}</div>
+
+<div class="container">
+    <div class="profile-background"></div>
+    <section class="profile-header">
+        <div class="profile-avatar">
+            <span class="avatar">{{ auth.user.name[0] }}</span>
+        </div>
+        <div class="profile-header-data">
+            {{ auth.user.name }} {{ auth.user.lastname }}
+        </div>
+        @if(auth.user.isAdmin)
+            <span class="badge-role">admin</span>
+        @end
+    </section>
+    <section class="profile-body">
+        <div class="profile-body-data">
+            <div class="control-data">
+                <span class="control-data-key">Estado: </span>
+                <span class="control-data-value">{{ auth.user.isVerified ? 'Verificado' : 'No verificado' }}</span>
+            </div>
+            <div class="control-data">
+                <span class="control-data-key">ID: </span>
+                <span class="control-data-value">#{{ auth.user.id.toString().padStart(3,0) }}</span>
+            </div>
+            <div class="control-data">
+                <span class="control-data-key">Nombre(s): </span>
+                <span class="control-data-value">{{ auth.user.name }}</span>
+            </div>
+            <div class="control-data">
+                <span class="control-data-key">Apellidos(s): </span>
+                <span class="control-data-value">{{ auth.user.lastname }}</span>
+            </div>
+            <div class="control-data">
+                <span class="control-data-key">Correo electrónico: </span>
+                <span class="control-data-value">{{ auth.user.email }}</span>
+            </div>
+        </div>
+    </section>
+</div>
+
 @end

@@ -1,15 +1,17 @@
 <nav class="nav-links">
   <ul class="link-list">
-    <li class="link-list-item"><a class="nav-link" href="/">Inicio</a></li>
-    <li class="link-list-item"><a class="nav-link" href="/products">Productos</a></li>
+    <li class="link-list-item"><a class="nav-link" href={{ route('home') }}>Inicio</a></li>
+    <li class="link-list-item"><a class="nav-link" href={{ route('products') }}>Productos</a></li>
   </ul>
   <ul class="link-list">
-
     @if(!auth.isLoggedIn)
-      <li class="link-list-item"><a class="nav-link" href="/login">Iniciar Sesión</a></li>
+      <li class="link-list-item"><a class="nav-link" href={{ route('login.form') }}>Iniciar Sesión</a></li>
     @else
-      <li class="link-list-item"><a class="nav-link" href="/logout">Cerrar Sesión</a></li>
-      <li class="link-list-item"><a class="nav-link" href="/profile">Mi perfil</a></li>
+      @if(auth.user.isAdmin)
+        <li class="link-list-item"><a class="nav-link" href={{ route('control.panel') }}>Panel de Control</a></li>
+      @end
+      <li class="link-list-item"><a class="nav-link" href={{ route('user.logout') }}>Cerrar Sesión</a></li>
+      <li class="link-list-item"><a class="nav-link" href={{ route('user.profile') }}>Mi perfil</a></li>
     @end
   </ul>
 </nav>
