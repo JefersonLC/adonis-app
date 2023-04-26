@@ -8,7 +8,7 @@ export const csp: ShieldConfig['csp'] = {
 
 export const csrf: ShieldConfig['csrf'] = {
   enabled: true,
-  exceptRoutes: [],
+  exceptRoutes: ['/api/categories', '/api/products'],
   enableXsrfCookie: true,
   methods: ['POST', 'PUT', 'PATCH', 'DELETE'],
   cookieOptions: {
